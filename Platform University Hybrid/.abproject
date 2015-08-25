@@ -1,0 +1,48 @@
+{
+  "ProjectName": "Platform University Hybrid",
+  "ProjectGuid": "d067f5cc-51f1-4efb-98f5-439936f21c9d",
+  "projectVersion": 1,
+  "AppIdentifier": "com.telerik.PlatformUniversityHybrid",
+  "DisplayName": "Platform University Hybrid",
+  "Author": "",
+  "Description": "Platform University Hybrid",
+  "BundleVersion": "1.0",
+  "AndroidVersionCode": "1",
+  "iOSDeviceFamily": [
+    "1",
+    "2"
+  ],
+  "iOSBackgroundMode": [],
+  "ProjectTypeGuids": "{070BCB52-5A75-4F8C-A973-144AF0EAFCC9}",
+  "FrameworkVersion": "3.7.0",
+  "AndroidPermissions": [
+    "android.permission.INTERNET"
+  ],
+  "DeviceOrientations": [
+    "Portrait",
+    "Landscape"
+  ],
+  "AndroidHardwareAcceleration": "false",
+  "iOSStatusBarStyle": "Default",
+  "Framework": "Cordova",
+  "WP8TileTitle": "",
+  "WP8Publisher": "",
+  "WP8Capabilities": [
+    "ID_CAP_NETWORKING",
+    "ID_CAP_WEBBROWSERCOMPONENT"
+  ],
+  "WP8Requirements": [],
+  "WP8PublisherID": "{43294589-24bd-405e-a3fb-71012209de1b}",
+  "WP8ProductID": "{c42b5c49-1068-4f5a-bad8-f10fe8151664}",
+  "WPSdk": "8.0",
+  "WP8PackageIdentityName": "1234Telerik.PlatformUniversityHybrid",
+  "WP8WindowsPublisherName": "CN=Telerik",
+  "WP8SupportedResolutions": [
+    "ID_RESOLUTION_WVGA",
+    "ID_RESOLUTION_WXGA",
+    "ID_RESOLUTION_HD720P"
+  ],
+  "CorePlugins": [
+    "org.apache.cordova.network-information"
+  ]
+}
