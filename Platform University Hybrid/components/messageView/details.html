@@ -1,0 +1,14 @@
+<div data-role="view" data-title="Details" data-model="app.messageView.messageViewModel" data-bind="events: { show: detailsShow }">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text">
+            <a data-role="backbutton" data-align="left">Back</a>
+            <span data-bind="text: currentItem.Title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;"></span>
+        </div>
+    </header>
+
+    <h3 data-bind="text: currentItem.Title"></h3>
+    <p data-bind="text: currentItem.Content"></p>
+
+    <!-- START_CUSTOM_CODE_messageViewModel -->
+    <!-- END_CUSTOM_CODE_messageViewModel -->
+</div>

@@ -1,15 +1,110 @@
 {
   "type": "kendo-ui-mobile",
-  "isNew": true,
+  "views": [
+    {
+      "type": "view",
+      "components": [
+        {
+          "type": "authentication",
+          "name": "homeModel",
+          "dataProvider": "defaultProvider",
+          "emailLabel": "Email",
+          "passwordLabel": "Password",
+          "signinLabel": "Sign In",
+          "signinRedirect": "home",
+          "enableRegistration": true,
+          "gotoRegisterLabel": "Register",
+          "registerEmailLabel": "Email",
+          "registerPasswordLabel": "Password",
+          "registerNameLabel": "Name",
+          "registerLabel": "Register",
+          "registerRedirect": "home",
+          "gotoSigninLabel": "Sign In"
+        }
+      ],
+      "name": "home",
+      "title": "Platform University",
+      "addToNavigation": false
+    },
+    {
+      "type": "view",
+      "components": [
+        {
+          "type": "list",
+          "name": "studentViewModel",
+          "dataProvider": "defaultProvider",
+          "collection": "Course",
+          "headerField": "Title",
+          "subHeaderField": "CourseDescription",
+          "masterDetails": true,
+          "detailHeaderField": "Title",
+          "detailDescriptionField": "CourseDescription",
+          "pullToRefresh": false,
+          "endlessScroll": false
+        }
+      ],
+      "name": "studentView",
+      "title": "Student Home",
+      "addToNavigation": true,
+      "icon": "home"
+    },
+    {
+      "type": "view",
+      "components": [
+        {
+          "type": "list",
+          "name": "facultyViewModel",
+          "dataProvider": "defaultProvider",
+          "collection": "Course",
+          "headerField": "Title",
+          "masterDetails": true,
+          "detailHeaderField": "Title",
+          "pullToRefresh": false,
+          "endlessScroll": false
+        }
+      ],
+      "name": "facultyView",
+      "title": "Faculty Home",
+      "addToNavigation": true,
+      "icon": "home"
+    },
+    {
+      "type": "view",
+      "components": [
+        {
+          "type": "list",
+          "name": "messageViewModel",
+          "dataProvider": "defaultProvider",
+          "collection": "Message",
+          "headerField": "Title",
+          "subHeaderField": "Content",
+          "masterDetails": true,
+          "detailSubHeaderField": "Title",
+          "detailDescriptionField": "Content",
+          "pullToRefresh": false,
+          "endlessScroll": false
+        }
+      ],
+      "name": "messageView",
+      "title": "Messages",
+      "addToNavigation": true,
+      "icon": "info"
+    }
+  ],
   "dataProviders": [
     {
       "type": "dataProvider",
-      "title": "DefaultProvider",
+      "everliveUrl": "//platform.telerik.com/bs-api/v1/",
       "name": "defaultProvider",
+      "title": "DefaultProvider",
       "source": "everlive",
-      "offlineStorage": true,
       "everliveKey": "oixi02nRsPmqNOS7",
-      "everliveUrl": ""
+      "offlineStorage": true
     }
-  ]
+  ],
+  "name": "kendoUiMobileApp",
+  "navigation": "tabstrip",
+  "view": "home",
+  "transition": "slide",
+  "skin": "flat"
 }

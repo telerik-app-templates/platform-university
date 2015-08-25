@@ -1,0 +1,14 @@
+<div data-role="view" data-title="Student Home" data-layout="main" data-model="app.studentView" data-show="app.studentView.onShow" data-after-show="app.studentView.afterShow">
+    <!-- START_CUSTOM_CODE_studentView -->
+    <!-- END_CUSTOM_CODE_studentView -->
+    <ul data-role="listview" data-style="inset" data-template="studentViewModelTemplate" data-bind="{ source: studentViewModel.dataSource, events: {click: studentViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
+    </ul>
+    <!-- START_CUSTOM_CODE_studentViewModel -->
+    <!-- END_CUSTOM_CODE_studentViewModel -->
+    <script type="text/x-kendo-template" id="studentViewModelTemplate">
+        <div class="image-with-text">
+            <h3>#: data['Title'] #</h3>
+            <p>#: data['CourseDescription'] #</p>
+        </div>
+    </script>
+</div>
