@@ -32,13 +32,13 @@
 
         <!-- application views will be rendered here -->
 
-        <footer data-role="footer">
+<!--        <footer data-role="footer">
             <div data-role="tabstrip" id="navigation-container">
                 <a href="components/studentView/view.html" data-icon="home">Student Home</a>
                 <a href="components/facultyView/view.html" data-icon="home">Faculty Home</a>
                 <a href="components/messageView/view.html" data-icon="info">Messages</a>
             </div>
-        </footer>
+        </footer>-->
     </div>
 
     <div data-role="layout" data-id="main-nonav">
@@ -51,6 +51,43 @@
         <!-- application views will be rendered here -->
 
         <footer data-role="footer">
+        </footer>
+    </div>
+    
+    <div data-role="layout" data-id="main-student">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+
+        <!-- application views will be rendered here -->
+
+        <footer data-role="footer">
+            <div data-role="tabstrip" id="navigation-container">
+                <a href="components/studentView/view.html" data-icon="home">My Courses</a>
+                <a href="components/studentView/courses.html" data-icon="home">Course List</a>
+                <a href="components/messageView/sView.html" data-icon="info">Messages</a>
+                <a href="components/home/logout.html" data-icon="info">Logout</a>
+            </div>
+        </footer>
+    </div>
+    
+    <div data-role="layout" data-id="main-faculty">
+        <header data-role="header">
+            <div data-role="navbar">
+                <span data-role="view-title"></span>
+            </div>
+        </header>
+
+        <!-- application views will be rendered here -->
+
+        <footer data-role="footer">
+            <div data-role="tabstrip" id="navigation-container">
+                <a href="components/facultyView/view.html" data-icon="home">Faculty Home</a>
+                <a href="components/messageView/fView.html" data-icon="info">Messages</a>
+                <a href="components/home/logout.html" data-icon="info">Logout</a>
+            </div>
         </footer>
     </div>
     <!-- START_CUSTOM_CODE_kendoUiMobileApp -->

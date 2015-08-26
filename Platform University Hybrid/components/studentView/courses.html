@@ -1,0 +1,21 @@
+<div data-role="view" data-title="Student Home" data-layout="main-student" 
+     data-model="app.studentView" data-bind="events: { afterShow: studentViewModel.courseListShow }">
+    <!-- START_CUSTOM_CODE_studentView -->
+    <!-- END_CUSTOM_CODE_studentView -->
+    <ul data-role="listview" data-style="inset" data-template="courseListTemplate" data-bind="{ source: studentViewModel.dataSource, events: {click: studentViewModel.courseClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
+    </ul>
+    <!-- START_CUSTOM_CODE_studentViewModel -->
+    <!-- END_CUSTOM_CODE_studentViewModel -->
+    <script type="text/x-kendo-template" id="courseListTemplate">
+        <div class="image-with-text">
+            <h3>#: data['Title'] #</h3>
+            <p>
+                # if (Enrollment === undefined || Enrollment.length < EnrollmentCap) { #
+                	<p>Open - Enroll Now!</p>
+                # } else { #
+                	<p>Closed - Enrollment Full</p>
+                # } #
+        	</p>
+        </div>
+    </script>
+</div>

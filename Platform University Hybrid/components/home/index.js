@@ -12,6 +12,8 @@ app.home = kendo.observable({
         mode = 'signin',
         registerRedirect = 'home',
         signinRedirect = 'home',
+        studentRedirect = 'studentView',
+        facultyRedirect = 'facultyView',
         init = function(error) {
             if (error) {
                 if (error.message) {
@@ -31,7 +33,24 @@ app.home = kendo.observable({
         },
         successHandler = function(data) {
             var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
+            
+            if (data && data.result) {                            
+                provider.Users.currentUser().then(
+                function (user) {
+                    app.currentUser = user.result;
+                    var role = user.result.Role;
+                    var url = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/GetRole?roleId=" + role;
 
+                    $.get(url, 
+                         function (success) {
+                         app.mobileApp.navigate('components/' + success + 'View/view.html');
+                    });
+
+                }, function (error) {
+                    console.log(error);
+                });
+            }
+/*            return;
             if (data && data.result) {
                 app.user = data.result;
 
@@ -40,12 +59,12 @@ app.home = kendo.observable({
                 }, 0);
             } else {
                 init();
-            }
+            }*/
         },
         homeModel = kendo.observable({
             displayName: '',
-            email: '',
-            password: '',
+            email: 'hutnick@progress.com',
+            password: 'demo',
             validateData: function(data) {
                 if (!data.email) {
                     alert('Missing email');
@@ -89,12 +108,22 @@ app.home = kendo.observable({
             toggleView: function() {
                 mode = mode === 'signin' ? 'register' : 'signin';
                 init();
+            },
+            logoutShow: function() {
+                setTimeout(function() {
+                    provider.Users.logout(
+                        function (success) {
+                            app.mobileApp.navigate('#home');
+                        }, function (error) {
+                            alert("Problem with logging out. Please shut down the app if this continues to login again.");
+                        });
+                }, 2000);
             }
         });
 
     parent.set('homeModel', homeModel);
     parent.set('afterShow', function() {
-        provider.Users.currentUser().then(successHandler, init);
+        //provider.Users.currentUser().then(successHandler, init);
     });
 })(app.home);
 

@@ -1,8 +1,19 @@
-<div data-role="view" data-title="Student Home" data-layout="main" data-model="app.studentView" data-show="app.studentView.onShow" data-after-show="app.studentView.afterShow">
+<div data-role="view" data-title="Student Home" data-layout="main-student" data-model="app.studentView" 
+     data-bind="events: { show: studentViewModel.studentShow }">
     <!-- START_CUSTOM_CODE_studentView -->
     <!-- END_CUSTOM_CODE_studentView -->
-    <ul data-role="listview" data-style="inset" data-template="studentViewModelTemplate" data-bind="{ source: studentViewModel.dataSource, events: {click: studentViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
-    </ul>
+    
+    <div id="enrolled-course-list">
+        <ul data-role="listview" data-style="inset" data-template="studentViewModelTemplate" data-bind="{ source: studentViewModel.dataSource, events: {click: studentViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
+   		</ul>
+    </div>
+
+    <div id="no-course-view">
+        <p>
+            Navigate to the Course List tab to enroll in some classes!
+        </p>
+    </div>
+    
     <!-- START_CUSTOM_CODE_studentViewModel -->
     <!-- END_CUSTOM_CODE_studentViewModel -->
     <script type="text/x-kendo-template" id="studentViewModelTemplate">

@@ -1,14 +1,26 @@
 <div data-role="view" data-title="Details" data-model="app.studentView.studentViewModel" data-bind="events: { show: detailsShow }">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
-            <a data-role="backbutton" data-align="left">Back</a>
+            <a data-role="backbutton" data-align="left" href="#:back">Back</a>
             <span data-bind="text: currentItem.Title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;"></span>
         </div>
     </header>
 
-
     <p data-bind="text: currentItem.CourseDescription"></p>
 
     <!-- START_CUSTOM_CODE_studentViewModel -->
+    <div id="leave-class-div">
+        <p>
+            currently enrolled, give option to un-enroll
+        </p>
+    </div>
+    <div id="enroll-div">
+        <p>
+            not enrolled, give option to enroll
+        </p>
+           <div class="button-group button-group-vertical">
+                <a data-role="button" class="primary" data-bind="events: { click: enrollUser }">Enroll</a>
+            </div>
+    </div>
     <!-- END_CUSTOM_CODE_studentViewModel -->
 </div>
