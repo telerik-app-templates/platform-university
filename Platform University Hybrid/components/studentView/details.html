@@ -9,18 +9,26 @@
     <p data-bind="text: currentItem.CourseDescription"></p>
 
     <!-- START_CUSTOM_CODE_studentViewModel -->
-    <div id="leave-class-div">
+    <div id="drop-class-div">
         <p>
             currently enrolled, give option to un-enroll
         </p>
+        <div class="button-group button-group-vertical">
+            <a data-role="button" class="primary" data-bind="events: { click: dropCourse }">Drop Course</a>
+        </div>
     </div>
     <div id="enroll-div">
         <p>
             not enrolled, give option to enroll
         </p>
-           <div class="button-group button-group-vertical">
-                <a data-role="button" class="primary" data-bind="events: { click: enrollUser }">Enroll</a>
-            </div>
+        <div class="button-group button-group-vertical">
+            <a data-role="button" class="primary" data-bind="events: { click: enrollUser }">Enroll</a>
+        </div>
+    </div>
+    <div id="class-full-div">
+        <p>
+            Class is currently full. Check back later in case someone dropped it!
+        </p>
     </div>
     <!-- END_CUSTOM_CODE_studentViewModel -->
 </div>

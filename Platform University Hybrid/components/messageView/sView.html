@@ -1,14 +1,16 @@
-<div data-role="view" data-title="Messages" data-layout="main-student" data-model="app.messageView" data-show="app.messageView.onShow" data-after-show="app.messageView.afterShow">
+<div data-role="view" data-title="Messages" data-layout="main-student" data-model="app.messageView" 
+     data-bind="events: { beforeShow: messageViewModel.messageListShow }">
     <!-- START_CUSTOM_CODE_messageView -->
     <!-- END_CUSTOM_CODE_messageView -->
-    <ul data-role="listview" data-style="inset" data-template="messageViewModelTemplate" data-bind="{ source: messageViewModel.dataSource, events: {click: messageViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
+    <ul id="s-messages-list" data-role="listview" data-style="inset" data-template="messageViewModelTemplate" 
+        data-bind="{ events: {click: messageViewModel.itemClick}}">
     </ul>
     <!-- START_CUSTOM_CODE_messageViewModel -->
     <!-- END_CUSTOM_CODE_messageViewModel -->
     <script type="text/x-kendo-template" id="messageViewModelTemplate">
         <div class="image-with-text">
             <h3>#: data['Title'] #</h3>
-            <p>#: data['Content'] #</p>
+            <p>#: data['Content'].substring(0,25) + "..." #</p>
         </div>
     </script>
 </div>

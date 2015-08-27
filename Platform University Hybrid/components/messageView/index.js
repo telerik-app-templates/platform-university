@@ -61,17 +61,42 @@ app.messageView = kendo.observable({
         dataSource = new kendo.data.DataSource(dataSourceOptions),
         messageViewModel = kendo.observable({
             dataSource: dataSource,
+            messageListShow: function(e) {
+                var listname;
+                if (e.view.id.indexOf("sView") > -1) {
+                    listname = "#s-messages-list";
+                } else {
+                    listname = "#f-messages-list";
+                }
+                
+                var filter = {
+                    'User' : app.currentUser.Id,
+                    'IsArchived' : false
+                };
+
+                var messages = dataProvider.data('Message');
+                messages.get(filter,
+                	function (success) {
+                    	$(listname).data("kendoMobileListView").setDataSource(new kendo.data.DataSource({
+                            data: success.result
+                        }));
+                }, 
+					function (error) {
+                    alert("Error retrieving messages.  Try again later, please.");
+                });
+            },
             itemClick: function(e) {
-                app.mobileApp.navigate('#components/messageView/details.html?uid=' + e.dataItem.uid);
+                messageViewModel.set('currentItem', e.dataItem);
+                app.mobileApp.navigate('#components/messageView/details.html');
             },
             detailsShow: function(e) {
-                var item = e.view.params.uid,
+/*                var item = e.view.params.uid,
                     dataSource = messageViewModel.get('dataSource'),
                     itemModel = dataSource.getByUid(item);
                 if (!itemModel.Title) {
                     itemModel.Title = String.fromCharCode(160);
                 }
-                messageViewModel.set('currentItem', itemModel);
+                messageViewModel.set('currentItem', itemModel);*/
             },
             currentItem: null
         });
