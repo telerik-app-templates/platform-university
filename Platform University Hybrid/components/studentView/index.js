@@ -8,28 +8,41 @@ app.studentView = kendo.observable({
 // END_CUSTOM_CODE_studentView
 (function(parent) {
     var dataProvider = app.data.defaultProvider,
-        flattenLocationProperties = function(dataItem) {
-            var propName, propValue,
-                isLocation = function(value) {
-                    return propValue && typeof propValue === 'object' &&
-                        propValue.longitude && propValue.latitude;
-                };
-
-            for (propName in dataItem) {
-                if (dataItem.hasOwnProperty(propName)) {
-                    propValue = dataItem[propName];
-                    if (isLocation(propValue)) {
-                        // Location type property
-                        dataItem[propName] =
-                            kendo.format('Latitude: {0}, Longitude: {1}',
-                                propValue.latitude, propValue.longitude);
-                    }
-                }
-            }
-        },
         enrolledClassesUrl = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/GetEnrolledClasses?s=",
         enrollInClassUrl = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/EnrollStudent?s=",
         dropClassUrl = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/DropCourse?s=",
+        getProfessor = function (prof) {
+            var name = "Name Unavailable";
+            
+            for (var i = 0; i < app.professors.length; i++) {
+                if (prof === app.professors[i].Id) {
+                    name = app.professors[i].ProfessorName;
+                }
+            }
+            return name;
+        },
+        swapGradeType = function (id) {
+            var gt = "Grade Type Unavailable";
+            
+            for (var i = 0; i < app.gradeTypes.length; i++) {
+                if (id === app.gradeTypes[i].Id) {
+                    gt = app.gradeTypes[i].Description;
+                }
+            }
+            
+            return gt;
+        },
+        setEnrolledState = function () {
+            $("#enrollment-button").html("<span class=\"km-icon km-trash\"></span><span class=\"km-text\">Drop Class</span>");
+            $("#grades-div").show();
+        },
+        setNotEnrolledState = function () {
+            $("#enrollment-button").html("<span class=\"km-icon km-add\"></span><span class=\"km-text\">Enroll in Class</span>");
+        },
+        setFullState = function () {
+            $("#class-full-div").show();
+            $("#enrollment-button").html("<span class=\"km-icon km-stop\"></span><span class=\"km-text\">Class Full</span>");
+        },
         dataSourceOptions = {
             type: 'everlive',
             transport: {
@@ -41,7 +54,7 @@ app.studentView = kendo.observable({
                 var data = this.data();
                 for (var i = 0; i < data.length; i++) {
                     var dataItem = data[i];
-                    flattenLocationProperties(dataItem);
+                    dataItem.ProfessorName = getProfessor(dataItem.Professor);                    
                 }
             },
             schema: {
@@ -66,6 +79,36 @@ app.studentView = kendo.observable({
         dataSource = new kendo.data.DataSource(dataSourceOptions),
         studentViewModel = kendo.observable({
             dataSource: dataSource,
+            getGrades: function(s,c) {
+                // filter down to this student, this course
+                var filter = {
+                    'AssignedTo' : app.currentUser.Id,
+                    'Course' : studentViewModel.currentItem.Id
+                };
+
+                var grades = dataProvider.data('CourseGrade');
+                grades.get(filter,
+                    function (success) {
+                    	// fix data slightly
+                    	if (success.result.length < 1) {
+                            $("#no-grades-yet").show();
+                            $("#grades-div").hide();
+                            return;
+                        } else {
+                            $("#grades-div").show();
+                            $("#no-grades-yet").hide();
+                            for (var i = 0; i < success.result.length; i++) {
+                                success.result[i].GradeType = swapGradeType(success.result[i].GradeFor);
+                            }
+
+                            $("#grade-list").data('kendoMobileListView').setDataSource(new kendo.data.DataSource({
+                                data: success.result
+                            }));
+                        }
+                },  function (fail) {
+                    	$("#no-grades-yet").show();
+                });
+            },
             studentShow: function(e) {
                 $("#no-course-view").hide();
                 $("#enrolled-course-list").show();
@@ -73,6 +116,11 @@ app.studentView = kendo.observable({
                 var url = enrolledClassesUrl + app.currentUser.Id;
                 var req = $.get(url,
                     function (success) {
+                    
+                    for (var i = 0; i < success.length; i++) {
+                        success[i].ProfessorName = getProfessor(success[i].Professor);
+                    }
+                    
                     $("#enrolled-courses-list").data("kendoMobileListView").setDataSource(new kendo.data.DataSource({
                         data: success
                     }));
@@ -83,86 +131,98 @@ app.studentView = kendo.observable({
             navSource: null,
             itemClick: function(e) {
                 studentViewModel.set('currentItem', e.dataItem);
-                app.mobileApp.navigate('#components/studentView/details.html?src=enrolled');
+                studentViewModel.navSource = 'enrolled';
+                app.mobileApp.navigate('#components/studentView/details.html');
             },
             courseClick: function(e) {
                 studentViewModel.set('currentItem', e.dataItem);
-                app.mobileApp.navigate('#components/studentView/details.html?src=courselist');
+                studentViewModel.navSource = 'courselist';
+                app.mobileApp.navigate('#components/studentView/details.html');
             },
+            enrollState: null,
             detailsShow: function(e) {
-                // default, hide everything, only show what is relevant
-                $("#enroll-div").hide();
-                $("#drop-class-div").hide();
+                // default, hide everything, reset button, only show what is relevant
                 $("#grades-div").hide();
+                $("#no-grades-yet").hide();
                 $("#class-full-div").hide();
+                $("#enrollment-button").removeClass("km-state-active");
                 
-                var source = e.view.params.src;
+                var source = studentViewModel.navSource;
                 
                 if (source === "enrolled") {
-                    $("#drop-class-div").show();
-                    $("#grades-div").show();
+                    studentViewModel.set('enrollState', "enrolled");
+                    studentViewModel.getGrades();
+					setEnrolledState();
+                    return;
                 } 
                 
                 if (source === "courselist") {
                     if (studentViewModel.currentItem.Enrollment !== undefined) {
                         if ($.inArray(app.currentUser.Id, studentViewModel.currentItem.Enrollment) > -1) {
-                            // > -1 => student is in array, so show drop div
-                            $("#drop-class-div").show();
+                            // > -1 => student is in array, so show drop 
+                            studentViewModel.set('enrollState', "enrolled");
+                            studentViewModel.getGrades();
+                    		setEnrolledState();
                         } else {
-                            // id not found
                             // if class is not full, student may enroll
                             if (studentViewModel.currentItem.Enrollment.length >= studentViewModel.currentItem.EnrollmentCap) {
                                 // class full
-                                $("#class-full-div").show();
+                                studentViewModel.set('enrollState', "full");
+								setFullState();
                             } else {
-                                $("#enroll-div").show();
+                                studentViewModel.set('enrollState', "notenrolled");
+                                setNotEnrolledState();
                             }
                         }
                     } else {
                         // undefined => no enrollment yet, so student can enroll
-                        $("#enroll-div").show();
+                        studentViewModel.set('enrollState', "notenrolled");
+                        setNotEnrolledState();
                     }
                 }
             },
             currentItem: null,
             courseListShow: function(e) {
-                console.log(studentViewModel.dataSource.view());
+                studentViewModel.dataSource.read();
             },
-            enrollUser: function(e) {
+            enrollmentAction: function(e) {
                 app.mobileApp.showLoading();
-                var url = enrollInClassUrl + app.currentUser.Id + "&c=" + studentViewModel.currentItem.Id;
-                var req = $.get(url,
-                    function (success) {
-                		if (success.indexOf("Success") > -1) {
-                            alert("Student successfully enrolled in course.");
-                            $("#enroll-div").hide();
-                			$("#drop-class-div").show();
-                        } else {
-                            alert("There was a problem enrolling in the course. Contact the administrators if this problem continues.");
-                        }
-                    app.mobileApp.hideLoading();
-                }).fail(function() {
-                    alert("There was a problem enrolling in the course. Contact the administrators if this problem continues.");
-                    app.mobileApp.hideLoading();
-                });
-            },
-            dropCourse: function(e) {
-                app.mobileApp.showLoading();
-                var url = dropClassUrl + app.currentUser.Id + "&c=" + studentViewModel.currentItem.Id;
-                var req = $.get(url,
-                    function (success) {
-                		if (success.indexOf("Success") > -1) {
-                            alert("Student successfully dropped from course.");
-                            $("#enroll-div").show();
-                			$("#drop-class-div").hide();
-                        } else {
-                            alert("There was a problem dropping the course. Contact the administrators if this problem continues.");
-                        }
-                    app.mobileApp.hideLoading();
-                }).fail(function() {
-                    alert("There was a problem dropping the course. Contact the administrators if this problem continues.");
-                    app.mobileApp.hideLoading();
-                });
+                $(e.currentTarget).removeClass("km-state-active");
+                if (studentViewModel.enrollState === "enrolled") {
+                    var url = dropClassUrl + app.currentUser.Id + "&c=" + studentViewModel.currentItem.Id;
+                    var req = $.get(url,
+                        function (success) {
+                            if (success.indexOf("Success") > -1) {
+                                alert("Student successfully dropped from course.");
+                                studentViewModel.set('enrollState', "notenrolled");
+								setNotEnrolledState();
+                            } else {
+                                alert("There was a problem dropping the course. Contact the administrators if this problem continues.");
+                            }
+                        app.mobileApp.hideLoading();
+                    }).fail(function() {
+                        alert("There was a problem dropping the course. Contact the administrators if this problem continues.");
+                        app.mobileApp.hideLoading();
+                    });
+                } 
+                
+                if (studentViewModel.enrollState == "notenrolled") {
+                    var url = enrollInClassUrl + app.currentUser.Id + "&c=" + studentViewModel.currentItem.Id;
+                    var req = $.get(url,
+                        function (success) {
+                            if (success.indexOf("Success") > -1) {
+                                alert("Student successfully enrolled in course.");
+                                studentViewModel.set('enrollState', "enrolled");
+                                setEnrolledState();
+                            } else {
+                                alert("There was a problem enrolling in the course. Contact the administrators if this problem continues.");
+                            }
+                        app.mobileApp.hideLoading();
+                    }).fail(function() {
+                        alert("There was a problem enrolling in the course. Contact the administrators if this problem continues.");
+                        app.mobileApp.hideLoading();
+                    });
+                }
             }
         });
 

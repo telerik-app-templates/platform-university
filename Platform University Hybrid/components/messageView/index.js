@@ -9,6 +9,7 @@ app.messageView = kendo.observable({
 // END_CUSTOM_CODE_messageView
 (function(parent) {
     var dataProvider = app.data.defaultProvider,
+        archiveUrl = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/ArchiveMessage?m=",
         flattenLocationProperties = function(dataItem) {
             var propName, propValue,
                 isLocation = function(value) {
@@ -61,12 +62,12 @@ app.messageView = kendo.observable({
         dataSource = new kendo.data.DataSource(dataSourceOptions),
         messageViewModel = kendo.observable({
             dataSource: dataSource,
+            listname: null,
             messageListShow: function(e) {
-                var listname;
                 if (e.view.id.indexOf("sView") > -1) {
-                    listname = "#s-messages-list";
+                    messageViewModel.listname = "#s-messages-list";
                 } else {
-                    listname = "#f-messages-list";
+                    messageViewModel.listname = "#f-messages-list";
                 }
                 
                 var filter = {
@@ -77,7 +78,7 @@ app.messageView = kendo.observable({
                 var messages = dataProvider.data('Message');
                 messages.get(filter,
                 	function (success) {
-                    	$(listname).data("kendoMobileListView").setDataSource(new kendo.data.DataSource({
+                    	$(messageViewModel.listname).data("kendoMobileListView").setDataSource(new kendo.data.DataSource({
                             data: success.result
                         }));
                 }, 
@@ -90,15 +91,28 @@ app.messageView = kendo.observable({
                 app.mobileApp.navigate('#components/messageView/details.html');
             },
             detailsShow: function(e) {
-/*                var item = e.view.params.uid,
-                    dataSource = messageViewModel.get('dataSource'),
-                    itemModel = dataSource.getByUid(item);
-                if (!itemModel.Title) {
-                    itemModel.Title = String.fromCharCode(160);
-                }
-                messageViewModel.set('currentItem', itemModel);*/
+                $("#archive-message-button").removeClass("km-state-active");
             },
-            currentItem: null
+            currentItem: null,
+            archive: function(e) {
+                $(e.currentTarget).removeClass("km-state-active");
+                
+                app.mobileApp.showLoading();
+                var url = archiveUrl + messageViewModel.currentItem.Id;
+                var req = $.get(url,
+                    function (success) {
+                		if (success.indexOf("Success") > -1) {
+                            alert("Message archived successfully.");
+                            app.mobileApp.navigate("#:back");
+                        } else {
+                            alert("There was a problem archiving this message. Please try again later.");
+                        }
+                    app.mobileApp.hideLoading();
+                }).fail(function() {
+                    alert("There was a problem archiving this message. Please try again later.");
+                    app.mobileApp.hideLoading();
+                });
+            }
         });
 
     parent.set('messageViewModel', messageViewModel);

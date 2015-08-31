@@ -2,7 +2,8 @@
      data-model="app.studentView" data-bind="events: { afterShow: studentViewModel.courseListShow }">
     <!-- START_CUSTOM_CODE_studentView -->
     <!-- END_CUSTOM_CODE_studentView -->
-    <ul data-role="listview" data-style="inset" data-template="courseListTemplate" data-bind="{ source: studentViewModel.dataSource, events: {click: studentViewModel.courseClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
+    <ul data-role="listview" data-style="inset" data-template="courseListTemplate" 
+        data-bind="{ source: studentViewModel.dataSource, events: {click: studentViewModel.courseClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
     </ul>
     <!-- START_CUSTOM_CODE_studentViewModel -->
     <!-- END_CUSTOM_CODE_studentViewModel -->

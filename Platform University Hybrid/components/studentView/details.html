@@ -1,4 +1,5 @@
-<div data-role="view" data-title="Details" data-model="app.studentView.studentViewModel" data-bind="events: { show: detailsShow }">
+<div data-role="view" data-title="Details" data-model="app.studentView.studentViewModel" 
+     data-bind="events: { show: detailsShow }">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
             <a data-role="backbutton" data-align="left" href="#:back">Back</a>
@@ -6,24 +7,20 @@
         </div>
     </header>
 
+    <p data-bind="text: currentItem.ProfessorName"></p>
+    
     <p data-bind="text: currentItem.CourseDescription"></p>
-
+    
     <!-- START_CUSTOM_CODE_studentViewModel -->
-    <div id="drop-class-div">
-        <p>
-            currently enrolled, give option to un-enroll
-        </p>
-        <div class="button-group button-group-vertical">
-            <a data-role="button" class="primary" data-bind="events: { click: dropCourse }">Drop Course</a>
-        </div>
+    <div id="grades-div">
+        <ul id="grade-list" data-role="listview" data-style="inset" data-template="gradeTemplate">
+            
+        </ul>
     </div>
-    <div id="enroll-div">
+    <div id="no-grades-yet">
         <p>
-            not enrolled, give option to enroll
+            No grades yet for this course.  Check back after mid-terms!
         </p>
-        <div class="button-group button-group-vertical">
-            <a data-role="button" class="primary" data-bind="events: { click: enrollUser }">Enroll</a>
-        </div>
     </div>
     <div id="class-full-div">
         <p>
@@ -31,4 +28,16 @@
         </p>
     </div>
     <!-- END_CUSTOM_CODE_studentViewModel -->
+    <footer data-role="footer">
+        <div data-role="tabstrip" id="course-details-nav">
+            <a id="enrollment-button" data-bind="events: { click: enrollmentAction }" data-icon="add">Enroll</a>
+        </div>
+    </footer>
+    
+    <script type="text/x-kendo-template" id="gradeTemplate">
+        <div class="image-with-text">
+            <h3>#: data['GradeType'] #</h3>
+            <p>#: data['Grade'] #</p>
+        </div>
+    </script>
 </div>

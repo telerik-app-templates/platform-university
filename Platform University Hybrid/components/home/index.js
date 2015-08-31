@@ -14,6 +14,7 @@ app.home = kendo.observable({
         signinRedirect = 'home',
         studentRedirect = 'studentView',
         facultyRedirect = 'facultyView',
+        facultyUrl = 'https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/GetProfessors',
         init = function(error) {
             if (error) {
                 if (error.message) {
@@ -31,6 +32,26 @@ app.home = kendo.observable({
                 $(activeView).show().siblings().hide();
             }
         },
+        getAppData = function() {
+            // get updated professor list, store in app
+            var prof = $.get(facultyUrl,
+                            function (success) {
+                app.professors = success.result;
+            }).fail(function () {
+                console.log("silent fail, no professor list");
+                app.professors = [];
+            });
+            
+            // get updated grade types list, store in app
+            var grades = provider.data('GradeType');
+            grades.get(null)
+            .then(function (success) {
+                app.gradeTypes = success.result;
+                console.log(app.gradeTypes);
+            }, function (error) {
+                app.gradeTypes = [];
+            });
+        },
         successHandler = function(data) {
             var redirect = mode === 'signin' ? signinRedirect : registerRedirect;
             
@@ -40,7 +61,9 @@ app.home = kendo.observable({
                     app.currentUser = user.result;
                     var role = user.result.Role;
                     var url = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/GetRole?roleId=" + role;
-
+                    
+                    getAppData();
+                    
                     $.get(url, 
                          function (success) {
                          app.mobileApp.navigate('components/' + success + 'View/view.html');
@@ -50,16 +73,6 @@ app.home = kendo.observable({
                     console.log(error);
                 });
             }
-/*            return;
-            if (data && data.result) {
-                app.user = data.result;
-
-                setTimeout(function() {
-                    app.mobileApp.navigate('components/' + redirect + '/view.html');
-                }, 0);
-            } else {
-                init();
-            }*/
         },
         homeModel = kendo.observable({
             displayName: '',
@@ -123,7 +136,6 @@ app.home = kendo.observable({
 
     parent.set('homeModel', homeModel);
     parent.set('afterShow', function() {
-        //provider.Users.currentUser().then(successHandler, init);
     });
 })(app.home);
 
