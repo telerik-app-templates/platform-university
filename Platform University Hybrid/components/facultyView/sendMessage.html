@@ -1,0 +1,33 @@
+<div data-role="view" data-title="Send Message" data-model="app.facultyView.facultyViewModel" 
+     data-bind="events: { show: sendMessageShow }">
+    <header data-role="header">
+        <div data-role="navbar" class="header-text">
+            <a data-role="backbutton" data-align="left" href="#:back">Back</a>
+            <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;">Send Message</span>
+        </div>
+    </header>
+
+    <p>
+        Sends a message using PU-Mail, our in-school messaging system!
+    </p>
+    
+    <div class="description">
+        <span style="font-weight: bold">To: </span><span data-bind="text: currentStudent.Name"></span>
+    </div>
+    
+    <div class="description">
+        <span style="font-weight: bold">From: </span><span data-bind="text: getName() "></span>
+    </div>
+    
+    <div class="description">
+        <span style="font-weight: bold">Course: </span><span data-bind="text: currentItem.Title"></span>
+    </div>
+    
+    <div class="description">
+        <span style="font-weight: bold">Message: </span>
+    </div>
+    <div class="description">
+        <textarea style="width: 100%; height: 200px" id="message-content"></textarea>
+    </div>
+
+</div>

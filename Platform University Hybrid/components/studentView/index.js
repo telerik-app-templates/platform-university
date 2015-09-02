@@ -117,13 +117,18 @@ app.studentView = kendo.observable({
                 var req = $.get(url,
                     function (success) {
                     
-                    for (var i = 0; i < success.length; i++) {
-                        success[i].ProfessorName = getProfessor(success[i].Professor);
+                    if (success.length < 1) {
+                        $("#no-course-view").show();
+                		$("#enrolled-course-list").hide();
+                    } else {
+                        for (var i = 0; i < success.length; i++) {
+                            success[i].ProfessorName = getProfessor(success[i].Professor);
+                        }
+
+                        $("#enrolled-courses-list").data("kendoMobileListView").setDataSource(new kendo.data.DataSource({
+                            data: success
+                        }));
                     }
-                    
-                    $("#enrolled-courses-list").data("kendoMobileListView").setDataSource(new kendo.data.DataSource({
-                        data: success
-                    }));
                 }).fail(function() {
                     alert("Error loading data. Check with admins!");
                 });

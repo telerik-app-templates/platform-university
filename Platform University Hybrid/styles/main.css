@@ -146,3 +146,10 @@
 #kendoUiMobileApp #navigation-container .active:after {
     color: #fff;
 }
+
+.description {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: .83em;
+    margin-bottom: .83em;
+}

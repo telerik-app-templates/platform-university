@@ -6,9 +6,19 @@
             <span data-bind="text: currentItem.Title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;"></span>
         </div>
     </header>
-
-    <p data-bind="text: currentItem.ProfessorName"></p>
+	
+    <h2>
+        <span data-bind="text: currentItem.Title"></span>
+    </h2>
     
+    <div class="description">
+        <span style="font-weight: bold">Professor: </span><span data-bind="text: currentItem.ProfessorName"></span>
+    </div>
+    
+    <div class="description">
+        <span style="font-weight: bold">Course Number: </span><span data-bind="text: currentItem.CourseNumber"></span>
+    </div>
+
     <p data-bind="text: currentItem.CourseDescription"></p>
     
     <!-- START_CUSTOM_CODE_studentViewModel -->

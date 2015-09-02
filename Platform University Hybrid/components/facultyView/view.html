@@ -1,14 +1,25 @@
-<div data-role="view" data-title="Faculty Home" data-layout="main-faculty" data-model="app.facultyView" data-show="app.facultyView.onShow" data-after-show="app.facultyView.afterShow">
-    <!-- START_CUSTOM_CODE_facultyView -->
-    <!-- END_CUSTOM_CODE_facultyView -->
-    <ul data-role="listview" data-style="inset" data-template="facultyViewModelTemplate" data-bind="{ source: facultyViewModel.dataSource, events: {click: facultyViewModel.itemClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
+<div data-role="view" data-title="Faculty Home" data-layout="main-faculty" data-model="app.facultyView" 
+     data-bind="events: { show: facultyViewModel.facultyCoursesShow }">
+
+    <div>
+        <p>
+            Below are the courses you are teaching this semester.  Click through to access class roster and assign grades.
+        </p>
+    </div>
+    
+    <ul id="faculty-course-view" data-role="listview" data-style="inset" data-template="facultyViewModelTemplate" 
+        data-bind="events: { click: facultyViewModel.itemClick }">
     </ul>
-    <!-- START_CUSTOM_CODE_facultyViewModel -->
-    <!-- END_CUSTOM_CODE_facultyViewModel -->
+    
+    <div id="no-courses">
+        <p>
+            You are currently not assigned any courses! Check with administration to make sure this is correct!
+        </p>
+    </div>
+
     <script type="text/x-kendo-template" id="facultyViewModelTemplate">
         <div class="image-with-text">
             <h3>#: data['Title'] #</h3>
-
         </div>
     </script>
 </div>

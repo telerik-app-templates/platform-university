@@ -10,25 +10,6 @@ app.messageView = kendo.observable({
 (function(parent) {
     var dataProvider = app.data.defaultProvider,
         archiveUrl = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/ArchiveMessage?m=",
-        flattenLocationProperties = function(dataItem) {
-            var propName, propValue,
-                isLocation = function(value) {
-                    return propValue && typeof propValue === 'object' &&
-                        propValue.longitude && propValue.latitude;
-                };
-
-            for (propName in dataItem) {
-                if (dataItem.hasOwnProperty(propName)) {
-                    propValue = dataItem[propName];
-                    if (isLocation(propValue)) {
-                        // Location type property
-                        dataItem[propName] =
-                            kendo.format('Latitude: {0}, Longitude: {1}',
-                                propValue.latitude, propValue.longitude);
-                    }
-                }
-            }
-        },
         dataSourceOptions = {
             type: 'everlive',
             transport: {
@@ -40,8 +21,6 @@ app.messageView = kendo.observable({
                 var data = this.data();
                 for (var i = 0; i < data.length; i++) {
                     var dataItem = data[i];
-
-                    flattenLocationProperties(dataItem);
                 }
             },
             schema: {

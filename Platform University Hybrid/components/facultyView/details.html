@@ -1,12 +1,40 @@
 <div data-role="view" data-title="Details" data-model="app.facultyView.facultyViewModel" data-bind="events: { show: detailsShow }">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
-            <a data-role="backbutton" data-align="left">Back</a>
+            <a data-role="backbutton" data-align="left" href="#:back">Back</a>
             <span data-bind="text: currentItem.Title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;"></span>
         </div>
     </header>
 
+    <div>
+        <p>
+            Below is a list of all students enrolled in this course. Click through to individual students to send an internal message or assign grades.
+        </p>
+    </div>
 
-    <!-- START_CUSTOM_CODE_facultyViewModel -->
-    <!-- END_CUSTOM_CODE_facultyViewModel -->
+    <div id="course-student-list">
+        <ul id="student-list" data-role="listview" data-style="inset" data-template="student-info-template"
+           data-bind="events: { click : studentDetailsClick }">
+            
+        </ul>
+    </div>
+    <div id="no-students-enrolled-div">
+        <p>
+            Unfortunately no students are enrolled in this course yet, or all have dropped it already. 
+        </p>
+        <p>
+            Sorry. :(
+        </p>
+    </div>
+    
+    <ul data-role="actionsheet" id="studentActionSheet">
+	    <li><a data-action="app.facultyView.facultyViewModel.assignGradeClick">Assign Grade</a></li>
+    	<li><a data-action="app.facultyView.facultyViewModel.sendMessageClick">Send Message</a></li>
+	</ul>
+    
+    <script type="text/x-kendo-template" id="student-info-template">
+        <div class="image-with-text">
+            <h3>#: data['Name'] #</h3>
+        </div>
+    </script>
 </div>

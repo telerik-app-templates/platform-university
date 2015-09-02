@@ -10,7 +10,7 @@
             app.mobileApp = new kendo.mobile.Application(document.body, {
 
                 // you can change the default transition (slide, zoom or fade)
-                transition: 'slide',
+                transition: 'fade',
                 // comment out the following line to get a UI which matches the look
                 // and feel of the operating system
                 skin: 'flat',

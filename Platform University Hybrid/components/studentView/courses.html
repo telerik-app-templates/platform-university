@@ -1,12 +1,18 @@
 <div data-role="view" data-title="Course List" data-layout="main-student" 
      data-model="app.studentView" data-bind="events: { afterShow: studentViewModel.courseListShow }">
-    <!-- START_CUSTOM_CODE_studentView -->
-    <!-- END_CUSTOM_CODE_studentView -->
+
+    <div>
+        <p>
+            Choose from available courses here.  Type into the search box to narrow down your selection based on course title.
+        </p>
+    </div>
+    
     <ul data-role="listview" data-style="inset" data-template="courseListTemplate" 
-        data-bind="{ source: studentViewModel.dataSource, events: {click: studentViewModel.courseClick}}" data-pull-to-refresh="false" data-endless-scroll="false">
+        data-bind="{ source: studentViewModel.dataSource, events: {click: studentViewModel.courseClick}}" 
+        data-pull-to-refresh="false" data-endless-scroll="false"
+        data-filterable="{ field: 'Title', ignoreCase: true, operator: 'contains'}">
     </ul>
-    <!-- START_CUSTOM_CODE_studentViewModel -->
-    <!-- END_CUSTOM_CODE_studentViewModel -->
+
     <script type="text/x-kendo-template" id="courseListTemplate">
         <div class="image-with-text">
             <h3>#: data['Title'] #</h3>

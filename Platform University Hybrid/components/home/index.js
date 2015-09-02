@@ -36,6 +36,7 @@ app.home = kendo.observable({
             // get updated professor list, store in app
             var prof = $.get(facultyUrl,
                             function (success) {
+                console.log("success, got professors");
                 app.professors = success.result;
             }).fail(function () {
                 console.log("silent fail, no professor list");
@@ -76,7 +77,7 @@ app.home = kendo.observable({
         },
         homeModel = kendo.observable({
             displayName: '',
-            email: 'hutnick@progress.com',
+            email: 'hutnick@telerik.com',
             password: 'demo',
             validateData: function(data) {
                 if (!data.email) {
