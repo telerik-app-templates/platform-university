@@ -3,7 +3,7 @@
 
     <div>
         <p>
-            Below are the courses you are teaching this semester.  Click through to access class roster and assign grades.
+            Below are the courses you are teaching this semester.  Click through to access class roster and assign grades or send messages to students.
         </p>
     </div>
     
@@ -18,8 +18,9 @@
     </div>
 
     <script type="text/x-kendo-template" id="facultyViewModelTemplate">
-        <div class="image-with-text">
+        <div>
             <h3>#: data['Title'] #</h3>
+            <p>Current Course Enrollment: #: data['EnrollmentCount'] #/#: data['EnrollmentCap'] #</p>
         </div>
     </script>
 </div>

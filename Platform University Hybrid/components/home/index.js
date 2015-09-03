@@ -36,10 +36,8 @@ app.home = kendo.observable({
             // get updated professor list, store in app
             var prof = $.get(facultyUrl,
                             function (success) {
-                console.log("success, got professors");
                 app.professors = success.result;
             }).fail(function () {
-                console.log("silent fail, no professor list");
                 app.professors = [];
             });
             
@@ -48,7 +46,6 @@ app.home = kendo.observable({
             grades.get(null)
             .then(function (success) {
                 app.gradeTypes = success.result;
-                console.log(app.gradeTypes);
             }, function (error) {
                 app.gradeTypes = [];
             });
