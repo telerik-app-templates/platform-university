@@ -16,13 +16,6 @@ app.messageView = kendo.observable({
                 typeName: 'Message',
                 dataProvider: dataProvider
             },
-
-            change: function(e) {
-                var data = this.data();
-                for (var i = 0; i < data.length; i++) {
-                    var dataItem = data[i];
-                }
-            },
             schema: {
                 model: {
                     fields: {
@@ -43,6 +36,8 @@ app.messageView = kendo.observable({
             dataSource: dataSource,
             listname: null,
             messageListShow: function(e) {
+                // we need two different 'front' views to assign the different layouts for views, 
+                // so we use the viewname to help us know which list we target since we don't want dupe id's in the app
                 if (e.view.id.indexOf("sView") > -1) {
                     messageViewModel.listname = "#s-messages-list";
                 } else {
@@ -70,12 +65,9 @@ app.messageView = kendo.observable({
                 app.mobileApp.navigate('#components/messageView/details.html');
             },
             detailsShow: function(e) {
-                $("#archive-message-button").removeClass("km-state-active");
             },
             currentItem: null,
             archive: function(e) {
-                $(e.currentTarget).removeClass("km-state-active");
-                
                 app.mobileApp.showLoading();
                 var url = archiveUrl + messageViewModel.currentItem.Id;
                 var req = $.get(url,

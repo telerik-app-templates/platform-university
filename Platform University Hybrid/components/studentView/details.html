@@ -23,11 +23,19 @@
     
     <!-- START_CUSTOM_CODE_studentViewModel -->
     <div id="grades-div">
+        <hr style="margin-left: 1em; margin-right: 1em">
+        <h3>
+            Current Course Grades
+        </h3>
         <ul id="grade-list" data-role="listview" data-style="inset" data-template="gradeTemplate">
             
         </ul>
     </div>
     <div id="no-grades-yet">
+        <hr style="margin-left: 1em; margin-right: 1em">
+        <h3>
+            Current Course Grades
+        </h3>
         <p>
             No grades yet for this course.  Check back after mid-terms!
         </p>
@@ -45,9 +53,8 @@
     </footer>
     
     <script type="text/x-kendo-template" id="gradeTemplate">
-        <div class="image-with-text">
-            <h3>#: data['GradeType'] #</h3>
-            <p>#: data['Grade'] #</p>
+        <div>
+            <span style="font-weight: bold">#: data['GradeType'] #</h3></span>: <span>#: data['Grade'] #</span
         </div>
     </script>
 </div>

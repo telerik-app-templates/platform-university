@@ -1,18 +1,14 @@
-<div data-role="view" data-title="Details" data-model="app.messageView.messageViewModel" 
+<div data-role="view" data-title="Message" data-model="app.messageView.messageViewModel" 
      data-bind="events: { beforeShow: detailsShow }">
     <header data-role="header">
         <div data-role="navbar" class="header-text">
-            <a data-role="backbutton" data-align="left">Back</a>
-            <span data-bind="text: currentItem.Title" style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;"></span>
+            <a data-role="backbutton" class="active" data-align="left" href="#:back">Back</a>
+            <a data-role="button" data-align="right" data-bind="events: { click: archive }">Archive</a>
+            <span style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: center; display: block; margin-left: 70px; margin-right: 70px;">Message</span>
         </div>
     </header>
 
     <h3 data-bind="text: currentItem.Title"></h3>
     <p data-bind="text: currentItem.Content"></p>
 
-    <footer data-role="footer">
-        <div data-role="tabstrip" id="navigation-container">
-            <a id="archive-message-button" data-bind="events: { click: archive }" data-icon="downloads">Archive</a>
-        </div>
-    </footer>
 </div>

@@ -1,4 +1,8 @@
-<div id="home" data-role="view" data-title="Platform University" data-layout="main-nonav" data-model="app.home" data-show="app.home.onShow" data-after-show="app.home.afterShow">
+<div id="home" data-role="view" data-title="Platform University" data-layout="main-nonav" 
+     data-model="app.home" data-bind="events: { show : homeModel.homeShow }">
+    
+    <img id="title-image" style="margin-top: 1em;" />    
+    
     <div class="signin-view">
         <form>
             <ul data-role="listview" data-style="inset">
@@ -46,12 +50,8 @@
                 <a data-role="button" data-bind="events: { click: homeModel.toggleView }">Sign In</a>
             </div>
         </form>
-        <!-- START_CUSTOM_CODE_homeModel -->
-        <!-- END_CUSTOM_CODE_homeModel -->
     </div>
     <div class="offline" align="center" style="display:none;">
         You are currently offline. Before using this app in offline mode you must initialize it while you are online
     </div>
-    <!-- START_CUSTOM_CODE_home -->
-    <!-- END_CUSTOM_CODE_home -->
 </div>

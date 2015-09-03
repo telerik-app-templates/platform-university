@@ -4,8 +4,6 @@ app.facultyView = kendo.observable({
 
 });
 
-// START_CUSTOM_CODE_facultyView
-// END_CUSTOM_CODE_facultyView
 (function(parent) {
     var dataProvider = app.data.defaultProvider,
         studentsForCourseUrl = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/GetStudentsForCourse?c=",
@@ -25,13 +23,6 @@ app.facultyView = kendo.observable({
             transport: {
                 typeName: 'Course',
                 dataProvider: dataProvider
-            },
-
-            change: function(e) {
-                var data = this.data();
-                for (var i = 0; i < data.length; i++) {
-                    var dataItem = data[i];
-                }
             },
             schema: {
                 model: {
@@ -102,7 +93,7 @@ app.facultyView = kendo.observable({
                         }
                     }
                 }).fail(function () {
-                    console.log("fail at getting student list");
+                    alert("There was a problem accessing the student list.  Try again later.");
                 });
                 
             },
@@ -218,6 +209,3 @@ app.facultyView = kendo.observable({
 
     parent.set('facultyViewModel', facultyViewModel);
 })(app.facultyView);
-
-// START_CUSTOM_CODE_facultyViewModel
-// END_CUSTOM_CODE_facultyViewModel

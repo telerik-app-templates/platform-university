@@ -12,8 +12,6 @@ app.home = kendo.observable({
         mode = 'signin',
         registerRedirect = 'home',
         signinRedirect = 'home',
-        studentRedirect = 'studentView',
-        facultyRedirect = 'facultyView',
         facultyUrl = 'https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/GetProfessors',
         init = function(error) {
             if (error) {
@@ -74,8 +72,15 @@ app.home = kendo.observable({
         },
         homeModel = kendo.observable({
             displayName: '',
-            email: 'hutnick@telerik.com',
+            email: 'hutnick@progress.com',	//@progress.com = student, @telerik.com = faculty
             password: 'demo',
+            homeShow: function (e) {
+                console.log($("#title-image"));
+                var width = e.view.element[0].scrollWidth;
+                var base = "https://bs1.cdn.telerik.com/image/v1/oixi02nRsPmqNOS7/resize=w:" + width;
+                var src = "/https://bs3.cdn.telerik.com/v1/oixi02nRsPmqNOS7/17868110-526a-11e5-8d13-31a9a0f6f87f";
+                $("#title-image").attr("src", base + src);
+            },
             validateData: function(data) {
                 if (!data.email) {
                     alert('Missing email');
@@ -134,6 +139,7 @@ app.home = kendo.observable({
 
     parent.set('homeModel', homeModel);
     parent.set('afterShow', function() {
+        app.data.defaultProvider.helpers.html.processAll();
     });
 })(app.home);
 
