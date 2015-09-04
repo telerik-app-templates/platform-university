@@ -14,6 +14,8 @@ app.studentView = kendo.observable({
         getProfessor = function (prof) {
             var name = "Name Unavailable";
             
+            if (app.professors === undefined) return name;
+            
             for (var i = 0; i < app.professors.length; i++) {
                 if (prof === app.professors[i].Id) {
                     name = app.professors[i].ProfessorName;
@@ -23,6 +25,8 @@ app.studentView = kendo.observable({
         },
         swapGradeType = function (id) {
             var gt = "Grade Type Unavailable";
+            
+            if (app.gradeTypes === undefined) return gt;
             
             for (var i = 0; i < app.gradeTypes.length; i++) {
                 if (id === app.gradeTypes[i].Id) {
