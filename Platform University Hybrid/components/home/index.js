@@ -75,11 +75,12 @@ app.home = kendo.observable({
             email: 'hutnick@progress.com',	//@progress.com = student, @telerik.com = faculty
             password: 'demo',
             homeShow: function (e) {
-                console.log($("#title-image"));
-                var width = e.view.element[0].scrollWidth;
-                var base = "https://bs1.cdn.telerik.com/image/v1/oixi02nRsPmqNOS7/resize=w:" + width;
-                var src = "/https://bs3.cdn.telerik.com/v1/oixi02nRsPmqNOS7/17868110-526a-11e5-8d13-31a9a0f6f87f";
-                $("#title-image").attr("src", base + src);
+                if ($("#title-image").attr("src") === undefined) {
+                    var width = e.view.element[0].scrollWidth;
+                    var base = "https://bs1.cdn.telerik.com/image/v1/oixi02nRsPmqNOS7/resize=w:" + width;
+                    var src = "/https://bs3.cdn.telerik.com/v1/oixi02nRsPmqNOS7/17868110-526a-11e5-8d13-31a9a0f6f87f";
+                    $("#title-image").attr("src", base + src);
+                }
             },
             validateData: function(data) {
                 if (!data.email) {
@@ -129,7 +130,11 @@ app.home = kendo.observable({
                 setTimeout(function() {
                     provider.Users.logout(
                         function (success) {
-                            app.mobileApp.navigate('#home');
+                            // On logout, this kills navigation history and returns to Title screen.  This way stuff like
+                            // Android back button doesn't bring users back to previously viewed screens.
+                            var backlen = window.history.length;
+                            window.history.go(-(backlen-1));
+                            window.location.replace("#components/home/view.html");
                         }, function (error) {
                             alert("Problem with logging out. Please shut down the app if this continues to login again.");
                         });
