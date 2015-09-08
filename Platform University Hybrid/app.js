@@ -28,6 +28,12 @@
                 navigator.splashscreen.hide();
             }
 
+            // adds feedback anywhere in app
+			feedback.initialize('54323170-5631-11e5-bda2-a5e37393db1f');
+
+            // adds analytics support for checking app usage
+            analytics.Start();
+            
             var element = document.getElementById('appDrawer');
             if (typeof(element) != 'undefined' && element != null) {
                 if (window.navigator.msPointerEnabled) {
