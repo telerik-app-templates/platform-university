@@ -5,7 +5,7 @@ app.studentView = kendo.observable({
 });
 
 // START_CUSTOM_CODE_studentView
-// END_CUSTOM_CODE_studentView
+
 (function(parent) {
     var dataProvider = app.data.defaultProvider,
         enrolledClassesUrl = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/GetEnrolledClasses?s=",
@@ -237,6 +237,6 @@ app.studentView = kendo.observable({
 
     parent.set('studentViewModel', studentViewModel);
 })(app.studentView);
-
+// END_CUSTOM_CODE_studentView
 // START_CUSTOM_CODE_studentViewModel
 // END_CUSTOM_CODE_studentViewModel

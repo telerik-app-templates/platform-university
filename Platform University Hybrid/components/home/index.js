@@ -6,7 +6,7 @@ app.home = kendo.observable({
 });
 
 // START_CUSTOM_CODE_home
-// END_CUSTOM_CODE_home
+
 (function(parent) {
     var provider = app.data.defaultProvider,
         mode = 'signin',
@@ -147,6 +147,6 @@ app.home = kendo.observable({
         app.data.defaultProvider.helpers.html.processAll();
     });
 })(app.home);
-
+// END_CUSTOM_CODE_home
 // START_CUSTOM_CODE_homeModel
 // END_CUSTOM_CODE_homeModel

@@ -4,6 +4,8 @@ app.facultyView = kendo.observable({
 
 });
 
+// START_CUSTOM_CODE_facultyView
+
 (function(parent) {
     var dataProvider = app.data.defaultProvider,
         studentsForCourseUrl = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/GetStudentsForCourse?c=",
@@ -209,3 +211,5 @@ app.facultyView = kendo.observable({
 
     parent.set('facultyViewModel', facultyViewModel);
 })(app.facultyView);
+
+// END_CUSTOM_CODE_facultyView

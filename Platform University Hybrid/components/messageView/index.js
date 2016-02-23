@@ -6,7 +6,7 @@ app.messageView = kendo.observable({
 });
 
 // START_CUSTOM_CODE_messageView
-// END_CUSTOM_CODE_messageView
+
 (function(parent) {
     var dataProvider = app.data.defaultProvider,
         archiveUrl = "https://platform.telerik.com/bs-api/v1/oixi02nRsPmqNOS7/Functions/ArchiveMessage?m=",
@@ -88,6 +88,6 @@ app.messageView = kendo.observable({
 
     parent.set('messageViewModel', messageViewModel);
 })(app.messageView);
-
+// END_CUSTOM_CODE_messageView
 // START_CUSTOM_CODE_messageViewModel
 // END_CUSTOM_CODE_messageViewModel
